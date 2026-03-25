@@ -31,8 +31,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Gradle wrapper ruxsati
-        run: chmod +x gradlew
+      - name: Gradle o'rnatish
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.2'
+
+      - name: Gradle wrapper yaratish (agar yo'q bo'lsa)
+        run: |
+          if [ ! -f "gradlew" ]; then
+            gradle wrapper --gradle-version=8.2
+          fi
+          chmod +x gradlew
 
       - name: Debug APK build
         run: ./gradlew assembleDebug --stacktrace
